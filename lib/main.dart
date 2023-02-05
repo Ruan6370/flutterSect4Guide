@@ -36,67 +36,70 @@ class HomePage extends StatelessWidget {
         title: const Text('Track Your Expenses!'),
       ),
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(
-              width: double.infinity,
-              child: Card(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const SizedBox(
+            width: double.infinity,
+            child: Card(
+              elevation: 5,
+              color: Colors.deepPurple,
+              child: Text('CHART'),
+            ),
+          ),
+          Column(
+            children: transactions.map((tx) {
+              return Card(
                 elevation: 5,
-                color: Colors.deepPurple,
-                child: Text('CHART'),
-              ),
-            ),
-            Column(
-              children: transactions.map((tx) {
-                return Card(
-                  elevation: 5,
-                  child: Row(children: <Widget>[
-                    Container(
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
+                child: Row(children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 15,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.deepPurpleAccent,
+                        width: 4,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      'R' + tx.amount.toStringAsFixed(2),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    )
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        tx.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.deepPurple,
                         ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.deepPurpleAccent,
-                            width: 4,
-                          ),
+                      ),
+                      Text(
+                        tx.date.toString(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.grey,
                         ),
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'R: ' + tx.amount.toStringAsFixed(2),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.deepPurpleAccent,
-                          ),
-                        )),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            tx.title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Colors.deepPurple,
-                            ),
-                          ),
-                          Text(
-                            tx.date.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ]),
-                  ]),
-                );
-              }).toList(),
-            ),
-          ]),
+                      ),
+                    ]
+                  ),
+                ]),
+              );
+            }).toList(),
+          ),
+        ]
+      ),
     );
   }
 }
