@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.deepPurple,
         title: const Text('Track Your Expenses!'),
       ),
       body: Column(
@@ -51,7 +51,6 @@ class HomePage extends StatelessWidget {
               children: transactions.map((tx) {
                 return Card(
                   elevation: 5,
-                  color: Colors.deepPurple,
                   child: Row(children: <Widget>[
                     Container(
                         margin: const EdgeInsets.symmetric(
@@ -60,8 +59,8 @@ class HomePage extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.black,
-                            width: 2,
+                            color: Colors.deepPurpleAccent,
+                            width: 4,
                           ),
                         ),
                         padding: const EdgeInsets.all(10),
@@ -70,24 +69,29 @@ class HomePage extends StatelessWidget {
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
+                            color: Colors.deepPurpleAccent,
                           ),
                         )),
-                    Column(children: <Widget>[
-                      Text(
-                        tx.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      Text(
-                        tx.date.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ]),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            tx.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.deepPurple,
+                            ),
+                          ),
+                          Text(
+                            tx.date.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ]),
                   ]),
                 );
               }).toList(),
