@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import 'dart:io';
 
 import 'transactions.dart';
 
@@ -27,6 +30,8 @@ class HomePage extends StatelessWidget {
     Transaction(
         id: 't2', title: 'Groceries', amount: 110.00, date: DateTime.now()),
   ];
+  late String titleInput;
+  late String amountInput;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class HomePage extends StatelessWidget {
         title: const Text('Track Your Expenses!'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           const SizedBox(
@@ -47,54 +52,98 @@ class HomePage extends StatelessWidget {
               child: Text('CHART'),
             ),
           ),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Title:',
+                    ),
+                    onChanged: (val) {
+                      titleInput = val;
+                    },
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Amount:',
+                    ),
+                    onChanged: (val) {
+                      amountInput = val;
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      debugPrint(titleInput);
+                      debugPrint(amountInput);
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.deepPurpleAccent,
+                    ), 
+                    child: const Text(
+                      'Add Transaction',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ),
+                ]
+              ),
+            )
+          ),
           Column(
             children: transactions.map((tx) {
               return Card(
                 elevation: 5,
                 child: Row(children: <Widget>[
                   Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 15,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.deepPurpleAccent,
-                        width: 4,
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
                       ),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      'R' + tx.amount.toStringAsFixed(2),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.deepPurpleAccent,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.deepPurpleAccent,
+                          width: 4,
+                        ),
                       ),
-                    )
-                  ),
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'R' + tx.amount.toStringAsFixed(2),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                      )
+                    ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        tx.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.deepPurple,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          tx.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                          ),
                         ),
-                      ),
-                      Text(
-                        tx.date.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.grey,
+                        Text(
+                          DateFormat.yMMMd().format(tx.date),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                    ]
-                  ),
-                ]),
+                      ]
+                    ),
+                  ]
+                ),
               );
             }).toList(),
           ),
