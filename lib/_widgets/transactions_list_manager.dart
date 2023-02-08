@@ -5,7 +5,7 @@ import '../_widgets/transactions_list.dart';
 import '../_models/transactions.dart';
 
 class TransactionsManager extends StatefulWidget {
-  const TransactionsManager(Key? key) : super(key: key);
+  const TransactionsManager({Key? key}) : super(key: key);
 
   @override
   _ManagerState createState() => _ManagerState();
@@ -19,11 +19,24 @@ class _ManagerState extends State<TransactionsManager> {
         id: 't2', title: 'Groceries', amount: 110.00, date: DateTime.now()),
   ];
 
+  void _addTransactionItem(String txTitle, double txAmount) {
+    final newTx = Transaction(
+      id: DateTime.now().toString(),
+      title: txTitle,
+      amount: txAmount,
+      date: DateTime.now(),
+    );
+
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        TransactionCreator(),
+        TransactionCreator(_addTransactionItem),
         TransactionList(_userTransactions),
       ],
     );

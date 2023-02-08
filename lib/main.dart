@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:helloworld/_widgets/transaction_creator.dart';
+import '_widgets/transactions_list_manager.dart';
 
 void main() {
   runApp(const PersonalExpenseTracker());
@@ -24,23 +24,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: const Text('Track Your Expenses!'),
-      ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(
-              width: double.infinity,
-              child: Card(
-                elevation: 5,
-                color: Colors.deepPurple,
-                child: Text('CHART'),
-              ),
-            ),
-          ]),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          title: const Text('Track Your Expenses!'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: const <Widget>[
+                SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 5,
+                    color: Colors.deepPurple,
+                    child: Text('CHART'),
+                  ),
+                ),
+                TransactionsManager(),
+              ]),
+        ));
   }
 }

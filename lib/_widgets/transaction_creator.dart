@@ -1,9 +1,13 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
+import './transactions_list_manager.dart';
 
 class TransactionCreator extends StatelessWidget {
-  TransactionCreator({Key? key}) : super(key: key);
+  TransactionCreator(this.addTx, {Key? key}) : super(key: key);
   final titleController = TextEditingController();
   final amountController = TextEditingController();
+  final Function addTx;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +32,8 @@ class TransactionCreator extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      debugPrint(titleController.text);
-                      debugPrint(amountController.text);
+                      addTx(titleController.text,
+                          double.parse(amountController.text));
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.deepPurpleAccent,
