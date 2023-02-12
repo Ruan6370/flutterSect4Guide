@@ -13,10 +13,14 @@ class PersonalExpenseTracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Personal Expense Tracker',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+        accentColor: Colors.deepPurpleAccent,
+      ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
@@ -29,8 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-   final List<Transaction> _userTransactions = [
+  final List<Transaction> _userTransactions = [
     Transaction(
         id: 't1', title: 'New shoes', amount: 950.00, date: DateTime.now()),
     Transaction(
@@ -52,24 +55,20 @@ class _HomePageState extends State<HomePage> {
 
   void _openTransactionCreator(BuildContext creatorContext) {
     showModalBottomSheet(
-      context: creatorContext, 
+      context: creatorContext,
       builder: (creatorContextB) {
         return GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-          child: TransactionCreator(_addTransactionItem)
-        )
-        
-        ;
+            onTap: () {},
+            behavior: HitTestBehavior.opaque,
+            child: TransactionCreator(_addTransactionItem));
       },
-    );  //B for builder...
+    ); //B for builder...
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
         title: const Text('Track Your Expenses!'),
         actions: <Widget>[
           IconButton(
@@ -83,23 +82,20 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const SizedBox(
+              SizedBox(
                 width: double.infinity,
                 child: Card(
                   elevation: 5,
-                  color: Colors.deepPurple,
-                  child: Text('CHART'),
+                  color: Theme.of(context).primaryColor,
+                  child: const Text('CHART'),
                 ),
               ),
-             TransactionList(_userTransactions),
+              TransactionList(_userTransactions),
             ]),
       ),
-      floatingActionButton:
-          FloatingActionButton(
-            onPressed: () => _openTransactionCreator(context), 
-            backgroundColor: Colors.deepPurple,
-            child: const Icon(Icons.add)
-          ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => _openTransactionCreator(context),
+          child: const Icon(Icons.add)),
     );
   }
 }
