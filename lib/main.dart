@@ -18,6 +18,15 @@ class PersonalExpenseTracker extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.deepPurpleAccent,
+        fontFamily: 'Quicksand',
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            color: Colors.white,
+          ),
+          // foregroundColor: Colors.white,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
