@@ -1,13 +1,34 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
-import './transactions_list_manager.dart';
 
-class TransactionCreator extends StatelessWidget {
+class TransactionCreator extends StatefulWidget {
   TransactionCreator(this.addTx, {Key? key}) : super(key: key);
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+
   final Function addTx;
+
+  @override
+  State<TransactionCreator> createState() => _TransactionCreatorState();
+}
+
+class _TransactionCreatorState extends State<TransactionCreator> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
+
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+
+    widget.addTx(
+      enteredTitle, 
+      enteredAmount
+    );
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +50,11 @@ class TransactionCreator extends StatelessWidget {
                     labelText: 'Amount:',
                   ),
                   controller: amountController,
+                  keyboardType: TextInputType.number,
+                  onSubmitted: (_) => submitData(),
                 ),
                 TextButton(
-                    onPressed: () {
-                      addTx(titleController.text,
-                          double.parse(amountController.text));
-                    },
+                    onPressed: submitData,
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.deepPurpleAccent,
                     ),
