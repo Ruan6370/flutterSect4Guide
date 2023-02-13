@@ -25,7 +25,11 @@ class PersonalExpenseTracker extends StatelessWidget {
             fontSize: 20,
             color: Colors.white,
           ),
-          // foregroundColor: Colors.white,
+        ),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'QuickSand'),
         ),
       ),
       debugShowCheckedModeBanner: false,
@@ -43,10 +47,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-        id: 't1', title: 'New shoes', amount: 950.00, date: DateTime.now()),
-    Transaction(
-        id: 't2', title: 'Groceries', amount: 110.00, date: DateTime.now()),
+    // Transaction(
+    //     id: 't1', title: 'New shoes', amount: 950.00, date: DateTime.now()),
+    // Transaction(
+    //     id: 't2', title: 'Groceries', amount: 110.00, date: DateTime.now()),
   ];
 
   void _addTransactionItem(String txTitle, double txAmount) {
