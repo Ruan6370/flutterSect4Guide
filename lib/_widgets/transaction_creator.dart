@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TransactionCreator extends StatefulWidget {
-  TransactionCreator(this.addTx, {Key? key}) : super(key: key);
+  const TransactionCreator(this.addTx, {Key? key}) : super(key: key);
 
   final Function addTx;
 
@@ -22,10 +22,7 @@ class _TransactionCreatorState extends State<TransactionCreator> {
       return;
     }
 
-    widget.addTx(
-      enteredTitle, 
-      enteredAmount
-    );
+    widget.addTx(enteredTitle, enteredAmount);
 
     Navigator.of(context).pop();
   }
