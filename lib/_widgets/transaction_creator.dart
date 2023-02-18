@@ -14,7 +14,7 @@ class _TransactionCreatorState extends State<TransactionCreator> {
 
   final amountController = TextEditingController();
 
-  void submitData() {
+  void _submitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = double.parse(amountController.text);
 
@@ -25,6 +25,14 @@ class _TransactionCreatorState extends State<TransactionCreator> {
     widget.addTx(enteredTitle, enteredAmount);
 
     Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2019),
+        lastDate: DateTime.now());
   }
 
   @override
@@ -48,20 +56,38 @@ class _TransactionCreatorState extends State<TransactionCreator> {
                   ),
                   controller: amountController,
                   keyboardType: TextInputType.number,
-                  onSubmitted: (_) => submitData(),
+                  onSubmitted: (_) => _submitData(),
                 ),
-                TextButton(
-                    onPressed: submitData,
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.deepPurpleAccent,
-                    ),
-                    child: const Text(
-                      'Add Transaction',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                SizedBox(
+                  height: 70,
+                  child: Row(
+                    children: <Widget>[
+                      const Text('No Date Chosen!'),
+                      TextButton(
+                        onPressed: _presentDatePicker,
+                        child: const Text(
+                          'Choose Date',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: _submitData,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                  ),
+                  child: const Text(
+                    'Add Transaction',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ]),
         ));
   }
