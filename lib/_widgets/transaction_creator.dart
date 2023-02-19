@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionCreator extends StatefulWidget {
   const TransactionCreator(this.addTx, {Key? key}) : super(key: key);
@@ -10,29 +11,42 @@ class TransactionCreator extends StatefulWidget {
 }
 
 class _TransactionCreatorState extends State<TransactionCreator> {
-  final titleController = TextEditingController();
 
+  final titleController = TextEditingController();
   final amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   void _submitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.parse(amountController.text);
-
-    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    if(amountController.text.isEmpty) {
       return;
     }
 
-    widget.addTx(enteredTitle, enteredAmount);
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+      return;
+    }
+
+    widget.addTx(enteredTitle, enteredAmount, _selectedDate);
 
     Navigator.of(context).pop();
   }
 
   void _presentDatePicker() {
     showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2019),
-        lastDate: DateTime.now());
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now()
+    ).then((pickedDate) {
+        if(pickedDate == null) {
+          return;   
+        } 
+        setState(() {
+            _selectedDate = pickedDate;
+          });
+    });
   }
 
   @override
@@ -61,8 +75,12 @@ class _TransactionCreatorState extends State<TransactionCreator> {
                 SizedBox(
                   height: 70,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      const Text('No Date Chosen!'),
+                      Text(
+                        _selectedDate == null 
+                        ? 'No Date Chosen!' 
+                        : 'Picked Date: ' + DateFormat.yMMMd().format(_selectedDate!)),
                       TextButton(
                         onPressed: _presentDatePicker,
                         child: const Text(

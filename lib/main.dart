@@ -52,6 +52,16 @@ class _HomePageState extends State<HomePage> {
         id: 't1', title: 'New shoes', amount: 950.00, date: DateTime.now()),
     Transaction(
         id: 't2', title: 'Groceries', amount: 110.00, date: DateTime.now()),
+    Transaction(
+        id: 't3', title: 'New shoes', amount: 950.00, date: DateTime.now()),
+    Transaction(
+        id: 't4', title: 'New shoes', amount: 950.00, date: DateTime.now()),
+    Transaction(
+        id: 't5', title: 'New shoes', amount: 950.00, date: DateTime.now()),
+    Transaction(
+        id: 't6', title: 'New shoes', amount: 950.00, date: DateTime.now()),
+    Transaction(
+        id: 't7', title: 'New shoes', amount: 950.00, date: DateTime.now()),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -64,12 +74,13 @@ class _HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  void _addTransactionItem(String txTitle, double txAmount) {
+  void _addTransactionItem(
+      String txTitle, double txAmount, DateTime selectedDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: selectedDate,
     );
 
     setState(() {
@@ -87,6 +98,14 @@ class _HomePageState extends State<HomePage> {
             child: TransactionCreator(_addTransactionItem));
       },
     ); //creatorContextB for builder...
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
   }
 
   @override
@@ -107,7 +126,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Chart(_recentTransactions),
-              TransactionList(_userTransactions),
+              TransactionList(_userTransactions, _deleteTransaction),
             ]),
       ),
       floatingActionButton: FloatingActionButton(
